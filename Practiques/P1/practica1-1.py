@@ -15,6 +15,7 @@ def build_graph(nomarxiu):
 
 #programar funcio bfs
 def components_BFS(graf):
+    
     llista_veins=[]
 
     llista_recorreguda=[]
