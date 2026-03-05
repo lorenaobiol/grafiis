@@ -1,4 +1,5 @@
 import networkx as nx
+import time
 
 '''
 BASICS PER A NTWX
@@ -29,6 +30,7 @@ def build_graph(nomarxiu):
 
 #programar funcio bfs
 def components_BFS(graf):
+    temps_inici=time.perf_counter()
     llista_recorreguda=set()
     llista_final=[]
 
@@ -55,10 +57,15 @@ def components_BFS(graf):
             
             llista_final.append(graf2)
     
-    return llista_final
+    temps_final=time.perf_counter()
+    temps= temps_final-temps_inici
+    
+    return llista_final, temps
 
 
 def components_DFS(graf):
+    temps_inici=time.perf_counter()
+
     llista_recorreguda=set()
     llista_final=[]
 
@@ -84,7 +91,10 @@ def components_DFS(graf):
             
             llista_final.append(graf2)
     
-    return llista_final
+    temps_final=time.perf_counter()
+    temps= temps_final-temps_inici
+    
+    return llista_final, temps
 
 
 print(list(nx.connected_components(build_graph('lastfm_asia_edges.csv'))))
