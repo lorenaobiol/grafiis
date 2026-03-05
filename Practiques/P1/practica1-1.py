@@ -19,7 +19,7 @@ g.add_edge() // g.add_edges_from((llista))
 def build_graph(nomarxiu):
     graf=nx.Graph()
     with open (nomarxiu,'r') as fitxer:
-
+        next(fitxer) 
         for linia in fitxer:
             llista_q_conte=linia.strip().split(',')
             
@@ -74,9 +74,8 @@ def components_DFS(graf):
             graf2=[]
 
             while pendents:
-                actual=pendents[0]
+                actual=pendents.pop()
                 graf2.append(actual)
-                pendents.pop()
 
                 for vei in graf.neighbors(actual):
                     if vei not in llista_recorreguda:
@@ -88,8 +87,9 @@ def components_DFS(graf):
     return llista_final
 
 
+print(list(nx.connected_components(build_graph('lastfm_asia_edges.csv'))))
+print(len(components_DFS(build_graph('lastfm_asia_edges.csv'))))
 print(build_graph('lastfm_asia_edges.csv'))
-
 
 
 
