@@ -96,9 +96,22 @@ def components_DFS(graf):
     
     return llista_final, temps
 
+'''
+def arestes_tallar(graf,n):
+    graf2=graf.copy()
+    arestes=list(graf2.edges())
+    for i in range(n):
+        graf2.remove_edge(arestes[i][0],arestes[i][1])
+    
+    return graf2'''
+    
+resultat=build_graph('lastfm_asia_edges.csv')
+print(resultat)
 
-print(list(nx.connected_components(build_graph('lastfm_asia_edges.csv'))))
-print(len(components_DFS(build_graph('lastfm_asia_edges.csv'))))
+resultat, temps =components_BFS(resultat)
+print(len(resultat))
+
+print(temps)
 print(build_graph('lastfm_asia_edges.csv'))
 
 
