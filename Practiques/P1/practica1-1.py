@@ -106,48 +106,29 @@ def arestes_tallar(graf,n):
     
     return graf'''
 
-def experiment_resiliencia_inversa(graf, num_simulacions=1):
-    graf_original = graf.copy()
-    
-    # Ens quedem només amb la Component Gegant per assegurar que pot ser connex
-    nodes_objetiu = max(nx.connected_components(graf_original), key=len)
-    arestes_totals = list(graf_original.subgraph(nodes_objetiu).edges())
-    num_nodes = len(nodes_objetiu)
-    total_arestes_disponibles = len(arestes_totals)
-    
-    resultats_talls_necessaris = []
 
-    print(f"Nodes en la component: {num_nodes}")
-    print(f"Arestes totals: {total_arestes_disponibles}")
 
-    for i in range(num_simulacions):
-        # Barrejem les arestes aleatòriament
-        random.shuffle(arestes_totals)
+def experiment_resiliencia(G_original):
+    # Fem una còpia per no fer malbé el graf original
+    G = G_original.copy()
+    
+    # Obtenim totes les arestes i les barregem (ordre de tall aleatori)
+    arestes = list(G.edges())
+    random.shuffle(arestes)
+    
+    comptador_talls = 0
+    
+    for u, v in arestes:
+        # Tallem l'aresta
+        G.remove_edge(u, v)
+        comptador_talls += 1
         
-        # Creem un graf buit només amb els nodes
-        g_sim = nx.Graph()
-        g_sim.add_nodes_from(nodes_objetiu)
-        
-        arestes_posades = 0
-        for u, v in arestes_totals:
-            g_sim.add_edge(u, v)
-            arestes_posades += 1
-            
-            # El graf es torna connex quan té exactament 1 component
-            if nx.is_connected(g_sim):
-                # Si hem necessitat 'arestes_posades' per connectar-lo,
-                # per desconnectar-lo hauríem de tallar:
-                talls = total_arestes_disponibles - arestes_posades + 1
-                resultats_talls_necessaris.append(talls)
-                break
-                
-    mitjana = sum(resultats_talls_necessaris) / num_simulacions
-    print(f"\nResultat mitjà després de {num_simulacions} simulacions:")
-    print(f"Hauries de tallar aproximadament {mitjana:.2f} arestes per dividir el graf.")
-    
-    return mitjana
+        # Comprovem si el graf continua sent connex
+        # nx.is_connected(G) utilitza un BFS o DFS per sota
+        if not nx.is_connected(G):
+            return comptador_talls
 
-# Execució
+    return comptador_talls
 
 
 
@@ -174,8 +155,8 @@ resultat1, temps =components_BFS(arestes)
 print(len(list(resultat1)))
 print()
 '''
-miitj=experiment_resiliencia_inversa(resultat)
-print(miitj)
+n_talls = experiment_resiliencia(build_graph('lastfm_asia_edges.csv'))
+print(f"Arestes tallades: {n_talls} ")
 
 
     
