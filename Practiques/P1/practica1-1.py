@@ -109,17 +109,14 @@ def arestes_tallar(graf,n):
 
 
 def experiment_resiliencia(G_original):
-    # Fem una còpia per no fer malbé el graf original
     G = G_original.copy()
     
-    # Obtenim totes les arestes i les barregem (ordre de tall aleatori)
     arestes = list(G.edges())
     random.shuffle(arestes)
     
     comptador_talls = 0
     
     for u, v in arestes:
-        # Tallem l'aresta
         G.remove_edge(u, v)
         comptador_talls += 1
         
