@@ -135,7 +135,6 @@ def experiment_resiliencia(G_original):
 
 
 
-    '''
 resultat=build_graph('lastfm_asia_edges.csv')
 print(resultat)
 
@@ -154,7 +153,7 @@ print()
 
 n_talls = experiment_resiliencia(build_graph('lastfm_asia_edges.csv'))
 print(f"Arestes tallades: {n_talls} ")
-'''
+
 
     
 
