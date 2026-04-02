@@ -19,6 +19,7 @@ retorni una llista amb les cliques de mida màxima del graf (30%).
 
 import networkx as nx
 import time
+from networkx.algorithms.approximation import large_clique_size
 
 def build_graph(nomarxiu):
     graf=nx.Graph()
@@ -36,59 +37,27 @@ def cliques(graf):
 
     temps_inici=time.perf_counter()
 
-    maxim=nx.large_clique_size(grafet)
+    maxim=large_clique_size(grafet)
     llistafinal=[clique for clique in nx.enumerate_all_cliques(grafet) if len(clique)==maxim ]
 
     temps_final=time.perf_counter()
     
-    return llistafinal , temps_final-temps_inici
+    return llistafinal , temps_final-temps_inici , maxim
 
 
-'''
-    
-    nodes=list(graf.nodes())
+#Proves
 
-    for n in range(len(nodes),0,-1): # aquest nombre s'anira fent gran i passara de 0 a la allargada del graf, per si el graf complet es k-clique. representa la k de clique.
-        llista_recorreguda=set()
-        llista_final=[]
+#el nostre graf
+g = nx.Graph()
+g.add_nodes_from(['charles','gina','amy','jake','raymond'])
+g.add_edges_from([('charles','gina'), ('charles','jake'), ('jake','gina'),('jake','raymond'),('amy','gina'),('gina','raymond')])
 
-        try:
-            for clique in range(n):
-
-        except:
-            continue
-'''
+#graf de lastfm
+graf=build_graph('large_twitch_edges.csv')
 
 
-def components_DFS(graf):
-    temps_inici=time.perf_counter()
+llista,temps,maxim=cliques(graf)
 
-    llista_recorreguda=set()
-    llista_final=[]
+print(len(llista),temps,maxim)
 
-    nodes=list(graf.nodes())
 
-    for node in nodes:
-        if node not in llista_recorreguda:
-            
-            pendents=[]
-            pendents.append(node)
-            llista_recorreguda.add(node)
-
-            graf2=[]
-
-            while pendents:
-                actual=pendents.pop()     #guardarem el valor del ULTIM ELEMENT de la llista de pendents i alhora l'eliminarem de la llista
-                graf2.append(actual)
-
-                for vei in graf.neighbors(actual):
-                    if vei not in llista_recorreguda:
-                        llista_recorreguda.add(vei)
-                        pendents.append(vei)
-            
-            llista_final.append(graf2)
-    
-    temps_final=time.perf_counter()
-    temps= temps_final-temps_inici
-    
-    return llista_final, temps
