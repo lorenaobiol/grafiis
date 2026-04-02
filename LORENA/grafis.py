@@ -36,10 +36,28 @@ def cliques(graf):
 
     temps_inici=time.perf_counter()
 
+    maxim=nx.large_clique_size(grafet)
+    llistafinal=[clique for clique in nx.enumerate_all_cliques(grafet) if len(clique)==maxim ]
+
+    temps_final=time.perf_counter()
+    
+    return llistafinal , temps_final-temps_inici
+
+
+'''
+    
     nodes=list(graf.nodes())
 
-    for n in range(len(nodes)): # aquest nombre s'anira fent gran i passara de 0 a la allargada del graf, per si el graf complet es k-clique. representa la k de clique.
+    for n in range(len(nodes),0,-1): # aquest nombre s'anira fent gran i passara de 0 a la allargada del graf, per si el graf complet es k-clique. representa la k de clique.
+        llista_recorreguda=set()
+        llista_final=[]
 
+        try:
+            for clique in range(n):
+
+        except:
+            continue
+'''
 
 
 def components_DFS(graf):
